@@ -9,7 +9,7 @@ export default async function handler(req, res) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "anthropic/claude-3-haiku",
+        model: "openai/gpt-3.5-turbo", // ✅ more reliable
         messages: [
           {
             role: "user",
@@ -21,20 +21,25 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
-console.log("FULL RESPONSE:", data);
+    console.log("FULL API RESPONSE:", data);
 
-if (!response.ok) {
-  return res.status(500).json({
-    error: data
-  });
-}
+    // 🔴 Handle errors properly
+    if (!response.ok) {
+      return res.status(500).json({
+        output: "API Error: " + JSON.stringify(data)
+      });
+    }
 
-res.status(200).json({
-  output: data.choices?.[0]?.message?.content || "No response from AI"
-});
+    const output = data.choices?.[0]?.message?.content;
+
+    res.status(200).json({
+      output: output || "No output received"
+    });
 
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Server error" });
+    res.status(500).json({
+      output: "Server error"
+    });
   }
 }
