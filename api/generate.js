@@ -24,7 +24,7 @@ export default async function handler(req, res) {
     console.log("FULL RESPONSE:", data);
 
     // 🔥 safer extraction
-    let output = "";
+   let output = JSON.stringify(data);
 
     if (data.choices && data.choices.length > 0) {
       output = data.choices[0].message?.content;
