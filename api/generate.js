@@ -21,11 +21,17 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
-    console.log("API RESPONSE:", data); // 👈 debug
+console.log("FULL RESPONSE:", data);
 
-    res.status(200).json({
-      output: data.choices?.[0]?.message?.content || "No response from AI"
-    });
+if (!response.ok) {
+  return res.status(500).json({
+    error: data
+  });
+}
+
+res.status(200).json({
+  output: data.choices?.[0]?.message?.content || "No response from AI"
+});
 
   } catch (error) {
     console.error(error);
