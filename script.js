@@ -9,12 +9,12 @@ async function generate() {
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({
-      text: input
-    })
+    body: JSON.stringify({ text: input })
   });
 
   const data = await response.json();
 
-  outputDiv.innerText = data.output;
+  console.log(data); // 👈 ADD THIS
+
+  outputDiv.innerText = data.output || "Error: No output received";
 }
