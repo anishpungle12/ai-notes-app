@@ -2,6 +2,11 @@ async function generate() {
   const input = document.getElementById("input").value;
   const outputDiv = document.getElementById("output");
 
+  if (!input.trim()) {
+    outputDiv.innerText = "Please enter some text";
+    return;
+  }
+
   outputDiv.innerText = "Generating...";
 
   const response = await fetch("/api/generate", {
@@ -14,7 +19,12 @@ async function generate() {
 
   const data = await response.json();
 
-  console.log(data); // 👈 ADD THIS
+  outputDiv.innerText = data.output;
+}
 
-  outputDiv.innerText = data.output || "Error: No output received";
+
+// ✅ Separate function (NOT inside generate)
+function copyText() {
+  const output = document.getElementById("output").innerText;
+  navigator.clipboard.writeText(output);
 }
