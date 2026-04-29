@@ -1,31 +1,5 @@
-export default async function handler(req, res) {
-  try {
-    const { text } = req.body;
-
-    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        model: "openai/gpt-3.5-turbo",
-        messages: [
-          {
-            role: "user",
-            content: `Summarize this into bullet points:\n${text}`
-          }
-        ]
-      })
-    });
-
-    const data = await response.json();
-
-    console.log("FULL RESPONSE:", data);
-
-    // 🔥 safer extraction
-  let requestCount = 0;
-const MAX_REQUESTS = 50; // limit per deployment
+let requestCount = 0;
+const MAX_REQUESTS = 50;
 
 export default async function handler(req, res) {
   try {
@@ -37,10 +11,10 @@ export default async function handler(req, res) {
 
     requestCount++;
 
-    const { text, mode } = req.body;
+    const { text = "", mode = "summary" } = req.body || {};
 
-    // 🎯 Different prompts
-    let prompt = "";
+    // Default prompt
+    let prompt = `Summarize this:\n${text}`;
 
     if (mode === "summary") {
       prompt = `Summarize this into bullet points:\n${text}`;
@@ -65,6 +39,12 @@ export default async function handler(req, res) {
     });
 
     const data = await response.json();
+
+    if (!response.ok) {
+      return res.status(500).json({
+        output: "API Error: " + JSON.stringify(data)
+      });
+    }
 
     const output = data.choices?.[0]?.message?.content;
 
