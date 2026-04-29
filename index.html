@@ -1,27 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AI Notes Generator</title>
+  <title>AI Study Tool</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <h1>AI Notes Generator</h1>
+  <h1>AI Study Tool</h1>
 
-<textarea id="input" placeholder="Paste your text..."></textarea>
+  <textarea id="input" placeholder="Paste your text..."></textarea>
 
-<select id="mode">
-  <option value="summary">Summarize</option>
-  <option value="explain">Explain Simply</option>
-  <option value="questions">Make Exam Questions</option>
-</select>
+  <select id="mode">
+    <option value="summary">Summarize</option>
+    <option value="explain">Explain Simply</option>
+    <option value="questions">Make Exam Questions</option>
+  </select>
 
-<button onclick="generate()">Generate</button>
-<button onclick="copyText()">Copy Output</button>
-
-<div id="output"></div>
-
+  <button onclick="generate()">Generate</button>
   <button onclick="copyText()">Copy Output</button>
+
+  <div id="output"></div>
 
   <script src="script.js"></script>
 </body>
