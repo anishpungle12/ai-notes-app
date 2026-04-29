@@ -8,11 +8,18 @@
 
   <h1>AI Notes Generator</h1>
 
-  <textarea id="input" placeholder="Paste your notes here..."></textarea>
+<textarea id="input" placeholder="Paste your text..."></textarea>
 
-  <button onclick="generate()">Generate Notes</button>
+<select id="mode">
+  <option value="summary">Summarize</option>
+  <option value="explain">Explain Simply</option>
+  <option value="questions">Make Exam Questions</option>
+</select>
 
-  <div id="output"></div>
+<button onclick="generate()">Generate</button>
+<button onclick="copyText()">Copy Output</button>
+
+<div id="output"></div>
 
   <button onclick="copyText()">Copy Output</button>
 
